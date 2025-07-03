@@ -1,0 +1,72 @@
+<div class="phone-frame mx-auto p-3 bg-gray-900 rounded-3xl shadow-lg relative w-80 h-[570px]">
+  <!-- Notch -->
+  <div class="notch bg-gray-600 absolute top-0 left-1/2 transform -translate-x-1/2 w-40 h-6  rounded-b-2xl"></div>
+
+  <!-- Screen -->
+  <div class="screen rounded-2xl  mt-10 pt-5 h-[440px]" 
+  [ngClass]="isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'">
+   <!-------------------------------------------------------------->
+
+   <div class="text-center">
+  <span>
+    {{ getAverageRating() }} ★
+  </span>
+  <div [ngClass]="getRatingColorClass()">{{ getRatingLabel() }}</div>
+
+
+
+    <div *ngFor="let star of stars; let i = index" class="flex items-center gap-4 mt-3">
+      <span class="w-10 text-sm font-medium text-gray-700 text-right"
+        [ngClass]="isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'">
+        {{ star.label }} ★
+      </span>
+
+      <div
+        class="relative h-2 flex-1 bg-gray-200  cursor-pointer overflow-hidden"
+        (click)="onBarClick($event, i)"
+      >
+        <div
+          class="absolute top-0 left-0 h-full bg-blue-500 transition-all duration-200"
+          [style.width.%]="getPercentage(star.count)"
+        ></div>
+      </div>
+
+      <input
+        type="number"
+        class="w-12 border-none text-black rounded px-1 py-0.5 text-sm"
+          [ngClass]="isDarkMode ? 'bg-gray-800 text-white' : 'bg-white text-black'"
+        [value]="star.count"
+        (input)="onInputChange($event, i)"
+        [max]="getMaxAllowed(i)"
+        min="0"
+      />
+    </div>
+
+    <div class="mt-20 sm text-center">*Based on your last 500 ratings.</div>
+  </div>
+
+
+
+
+
+
+
+
+
+   <!-------------------------------------------------------------->
+    
+  </div>
+
+
+
+  <!-- dark mode toggle -->
+  <div class="flex justify-center items-center gap-6 mt-4">
+    <button
+      class="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-md"
+      (click)="onDarkToggle()"
+    >
+      <span *ngIf="!isDarkMode" class="material-icons text-gray-800 text-xl">dark_mode</span>
+      <span *ngIf="isDarkMode" class="material-icons text-gray-800 text-xl">light_mode</span>
+    </button>
+  </div>
+</div>
